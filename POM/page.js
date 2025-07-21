@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test'
-
+import {formVariable}from "../POM/variable"
 export class form{
     constructor(page){
         this.page = page
@@ -10,8 +10,9 @@ export class form{
         this.userNumber = page.locator('#userNumber')
 
         //gender ratio
-        this.genderRatio = page.locator('//label[normalize-space()="Male"]')
-
+        this.genderRatioMale = page.locator('//label[normalize-space()="Male"]')
+        this.genderRatioFemale = page.locator('//label[normalize-space()="Female"]')
+        this.genderRatioOthers = page.locator('//label[normalize-space()="Other"]')
         //Date of Birth
         this.datePickerInput = page.locator('.react-datepicker__input-container');
         this.yearSelect = page.locator('.react-datepicker__year-select');
@@ -22,7 +23,10 @@ export class form{
         this.subjectClick = page.locator('.subjects-auto-complete__value-container')
         this.subjectsInput = page.locator('.subjects-auto-complete__input input');
         this.subEnter = page.keyboard
-        this.hobbiesCheckbox = page.locator('#hobbies-checkbox-3');
+        this.hobbiesCheckbox1 = page.locator('#hobbies-checkbox-1');
+        this.hobbiesCheckbox2 = page.locator('#hobbies-checkbox-2');
+        this.hobbiesCheckbox3 = page.locator('#hobbies-checkbox-3');
+
 
         //Address and file update
         this.currentAddress = page.locator('#currentAddress');
@@ -30,12 +34,12 @@ export class form{
 
         // State and City
         this.stateDropdown = page.locator('//div[@id="state"]');
-        // this.stateSlect = page.locator('.css-1uccc91-singleValue')
-        this.cityDropdown = page.locator('input[id="react-select-4-input"]');
+         this.cityDropdown = page.locator('//div[@id="city"]');;
+        // this.stateDropdown = page.locator(`//div[contains(text(),"${formVariable.state[i]}")]`)
+
 
         // Submit and Modal
         this.submitButton = page.locator('#submit');
-        this.modalTitle = page.locator('#example-modal-sizes-title-lg');
         this.closeButton = page.locator('#closeLargeModal');
 
 }
@@ -45,8 +49,15 @@ export class form{
     await this.userEmail.fill(email);
     await this.userNumber.fill(phone);
   }
-  async genderSlection(){
-    await this.genderRatio.click()
+  async genderSlection(gender){
+    if(gender === 'male'){
+      await this.genderRatioMale.click()
+    }else if(gender === 'female'){
+     await this.genderRatioFemale.click()
+    }else if(gender === 'other'){
+    await this.genderRatioOthers.click()
+    }
+    
   }
 
   async selectDateOfBirth(year, month) {
@@ -62,15 +73,26 @@ export class form{
     await this.subEnter.press("Enter")
     
   }
-
-  async hobbies(){
-    await this.hobbiesCheckbox.click({ force: true })
-    // await this.hobbiesEnter.press("Enter")
+ 
+async hobbies(hobbie){
+      const checkbox = this.getHobbyCheckbox(hobbie)
+      await checkbox.click({ force: true })
   }
 
-  //   async submitForm() {
-  //   await this.submitButton.click();
-  // }
+  getHobbyCheckbox(hobbie){
+    if(hobbie === 'Sports'){
+      return this.hobbiesCheckbox1
+    }else if(hobbie==='Reading'){
+      return this.hobbiesCheckbox2;
+    }else if(hobbie==='Music'){
+      return this.hobbiesCheckbox3;
+    }
+  }
+
+
+    async submitForm() {
+    await this.submitButton.click();
+  }
 
   async addImage(image){
     await this.fileUploadInput.setInputFiles(image)
@@ -79,20 +101,33 @@ export class form{
     await this.currentAddress.fill(address)
 }
 
-  async slectState(state){
-    await this.stateDropdown.click()
-    await this.page.locator(`text=${state}`).click()
-    // await this.stateSlect.click(state)
+  // async slectState(state){
+  //   await this.stateDropdown.click()
+  //   await this.page.locator(`text=${state}`).click()
+  //   // await this.stateSlect.click(state)
+  // }
+    async selectState(index){
+    // console.log(index)
+    await this.stateDropdown.click();
+    // if(index == "NCR"){
+    await this.page.locator(`#react-select-3-option-${index}`).click();
   }
-  async slectCity(city){
-    await this.cityDropdown.fill(city)
-    await this.page.keyboard.press('Enter')
+  async selectCity(cityL){
+    await this.cityDropdown.click()
+    
+    await this.page.locator(`#react-select-4-option-${cityL}`).click()
+    await this.page.waitForTimeout(50)
+     
   }
+  
   async submit(){
     await this.submitButton.click()
   }
   async closeBtn(){
-    await this.closeButton.click()
+    await this.closeButton.click( {force: true} )
   }
   
 }
+
+
+
