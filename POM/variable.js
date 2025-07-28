@@ -26,3 +26,18 @@ export const stateCityMapping = {
   'Rajasthan': ['Jaipur', 'Jaiselmer']
 };
 
+export const expectedData = {
+  "Student Name": "Ashish Paudel",
+  "Student Email": "ashish@gmail.com",
+  "Gender": "Male",
+  "Mobile": "9823875819",
+  "Date of Birth": "15 August,1998",
+  "Subjects": "Computer Science",
+  "Hobbies": "Music",
+  "Picture": "camera.png",
+  "Address": "kathmandu",
+  "State and City": "Uttar Pradesh Agra"
+};
+
+
+
