@@ -5,10 +5,12 @@ import { stateCityMapping } from "../POM/variable";
 import { expectedData } from "../POM/variable";
 
 
-    test.beforeEach(async({page})=>{
-    await page.goto("https://demoqa.com/automation-practice-form")
-})
+
 test.describe('Form test', () => {
+    
+    test.beforeEach(async({page})=>{
+        await page.goto("https://demoqa.com/automation-practice-form")
+})
     
     test('should submit successfully with all valid data', async ({ page },testData) => {
         const Form = new form(page)
