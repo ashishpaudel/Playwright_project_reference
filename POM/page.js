@@ -20,8 +20,8 @@ export class form{
         this.daySelect = page.locator('.react-datepicker__day--015');
 
         // Subjects and Hobbies
-        this.subjectClick = page.locator('.subjects-auto-complete__value-container')
-        this.subjectsInput = page.locator('.subjects-auto-complete__input input');
+        this.subjectClick = page.locator('.subjects-auto-complete__value-container subjects-auto-complete__value-container--is-multi css-1hwfws3')
+        this.subjectsInput = page.locator('#subjectsInput');
         this.subEnter = page.keyboard
         this.hobbiesCheckbox1 = page.locator('#hobbies-checkbox-1');
         this.hobbiesCheckbox2 = page.locator('#hobbies-checkbox-2');
@@ -68,9 +68,9 @@ export class form{
   }
 
   async selectSubject(subject){
-    await this.subjectClick.click()
+    await this.subjectsInput.click()
     await this.subjectsInput.pressSequentially(subject,{delay:10})
-    await this.subEnter.press("Enter")
+    await this.page.keyboard.press("Enter")
     
   }
  

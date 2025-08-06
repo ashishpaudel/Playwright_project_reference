@@ -3,7 +3,7 @@ import { form } from "../POM/page";
 import {formVariable}from "../POM/variable"
 import { stateCityMapping } from "../POM/variable";
 import { expectedData } from "../POM/variable";
-import { KeyObject } from "crypto";
+
 
     test.beforeEach(async({page})=>{
     await page.goto("https://demoqa.com/automation-practice-form")
@@ -141,9 +141,9 @@ test.describe('Form test', () => {
     test('should handle invalid subject input',async({page})=>{
         const Form = new form(page)
         await Form.selectSubject('asdasdf')
-        await Form.submit()
+        // await Form.submit()
         
-    await expect(page.locator('.subjects-auto-complete__multi-value__label')).toBeVisible()     
+    await expect(page.locator('.subjects-auto-complete__multi-value__label')).toHaveCount(0)     
     })
 
     test('should accept valid subjects',async({page})=>{
@@ -204,40 +204,6 @@ test.describe('Form test', () => {
        await Form.addImage('image/camera.png')
        await Form.addImage('image/canon.pdf')
     })
-
-
-    // test('should slect state and city ',async({page})=>{
-    //     const Form = new form(page)
-        
-        
-    //     const stateCount =formVariable.state.length
-    //     for(let i = 0; i < stateCount; i++){
-    //          console.log(`${i}`)
-    //          await  Form.slectState(`${i}`)
-    //          const  cityCount = formVariable.city.length
-    //          for(let i = 0; i < cityCount; i++){
-    //             // console.log(`${i}`)
-    //             for(const singleCity of (`${i}`) ){
-    //                 // console.log(singleCity)
-    //                 await Form.slectCity(singleCity)
-    //             }
-    //          }
-          
-    // }
-    // for(const state of Object.keys(stateCityMapping)){
-    //     const states = Object.keys(stateCityMapping);
-       
-    // for (let i = 0; i < states.length(); i++) {
-      
-    //   await Form.selectState(i);
-    //   //await page.waitForTimeout(100)
-    // }
-    // }
-
-    
-       
-    // })
-
 
 
      test('should click each state',async({page})=>{
