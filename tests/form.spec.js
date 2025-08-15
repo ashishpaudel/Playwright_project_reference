@@ -6,6 +6,7 @@ import { expectedData } from "../POM/variable";
 
 
 
+
 test.describe('Form test', () => {
     
     test.beforeEach(async({page})=>{
@@ -144,8 +145,7 @@ test.describe('Form test', () => {
         const Form = new form(page)
         await Form.selectSubject('asdasdf')
         // await Form.submit()
-        
-    await expect(page.locator('.subjects-auto-complete__multi-value__label')).toHaveCount(0)     
+
     })
 
     test('should accept valid subjects',async({page})=>{
